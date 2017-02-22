@@ -16,6 +16,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const newTournament =
       new Tournament(parseInt(teamsPerMatch.value), parseInt(numberOfTeams.value));
     await newTournament.run();
-    console.log('Done');
   })
 });
