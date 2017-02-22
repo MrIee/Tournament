@@ -3,6 +3,7 @@
   <head>
     <link rel="stylesheet" href="./client/styles.css">
     <script type="text/javascript" src="./client/constants.js"></script>
+    <script type="text/javascript" src="./client/render.js"></script>
     <script type="text/javascript" src="./client/fetch.js"></script>
     <script type="text/javascript" src="./client/teamsManager.js"></script>
     <script type="text/javascript" src="./client/match.js"></script>
@@ -15,9 +16,12 @@
   <body>
     <!-- Edit me. -->
     <!-- For tests to pass, the IDs of the elements below MUST NOT change. -->
-    <input id="teamsPerMatch" placeholder="Teams per match" type="number" />
-    <input id="numberOfTeams" placeholder="Number of teams" type="number" />
-    <button id="start">Start</button>
-    <span id="winner"></span>
+    <div class="tournament__wrapper">
+      <input id="teamsPerMatch" placeholder="Teams per match" type="number" />
+      <input id="numberOfTeams" placeholder="Number of teams" type="number" />
+      <button id="start">Start</button>
+      <span id="winner"></span>
+      <div id="tournament" class="tournament__body"></div>
+    </div>
   </body>
 </html>

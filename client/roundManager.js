@@ -1,6 +1,7 @@
 class RoundManager {
-  constructor(tournamentId, currentMatchUps, teamsPerMatch, teamsManager) {
+  constructor(tournamentId, currentMatchUps, teamsPerMatch, teamsManager, render) {
     this.teamsManager = teamsManager;
+    this.render = render;
     this.tournamentId = tournamentId;
     this.teamsPerMatch = teamsPerMatch;
     this.currentMatchUps = currentMatchUps;
@@ -15,6 +16,7 @@ class RoundManager {
 
     for (let matchUp of this.currentMatchUps) {
       this.winner = await Match.getWinner(matchUp, this.tournamentId, this.round, this.teamsManager);
+      this.render.fillMatch();
       winners.push(this.winner);
 
       if (winners.length === this.teamsPerMatch) {
@@ -46,7 +48,6 @@ class RoundManager {
     this.matchNo = 0;
     this.currentMatchUps = this.nextMatchUps;
     this.nextMatchUps = [];
-    // console.log('------ END OF ROUND ', this.round);
     this.round++;
     await this.runMatchUps(this.currentMatchUps);
   }

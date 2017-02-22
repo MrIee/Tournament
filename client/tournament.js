@@ -1,20 +1,42 @@
 class Tournament {
-  constructor(teamsPerMatch, numberOfTeams, teamsManager) {
+  constructor(teamsPerMatch, numberOfTeams) {
     this.teamsPerMatch = teamsPerMatch;
     this.numberOfTeams = numberOfTeams;
-    this.teamsManager = teamsManager;
   }
 
   async run() {
+    const render = new Render(this.getRounds());
+    render.reset();
+    render.drawMatches();
+
     const newTournament = await Fetch.createTournament(this.teamsPerMatch, this.numberOfTeams);
     const tournamentId = newTournament.tournamentId;
     const currentMatchUps = newTournament.matchUps;
 
+    const teamsManager = new TeamsManager();
     const roundManager =
-      new RoundManager(tournamentId, currentMatchUps, this.teamsPerMatch, this.teamsManager);
+      new RoundManager(tournamentId, currentMatchUps, this.teamsPerMatch, teamsManager, render);
+
     await roundManager.runMatchUps();
 
-    console.log('The winner is:\n', this.teamsManager.findTeam(roundManager.winner));
-    console.log('---===== ******* TOURNAMENT IS FINISHED ******* =====---');
+    const winner = teamsManager.findTeam(roundManager.winner);
+    render.drawWinner(winner.name);
+  }
+
+  getRounds() {
+    let rounds = [];
+    let numberOfTeams = this.numberOfTeams;
+
+    while(numberOfTeams % this.teamsPerMatch === 0) {
+      numberOfTeams /= this.teamsPerMatch;
+
+      let round = [];
+      for (let i = 0; i < numberOfTeams; i++ ) {
+        round.push(i);
+      }
+      rounds.push(round);
+    }
+
+    return rounds;
   }
 }
