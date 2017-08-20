@@ -49,6 +49,6 @@ class RoundManager {
     this.currentMatchUps = this.nextMatchUps;
     this.nextMatchUps = [];
     this.round++;
-    await this.runMatchUps(this.currentMatchUps);
+    await this.runMatchUps();
   }
 }
